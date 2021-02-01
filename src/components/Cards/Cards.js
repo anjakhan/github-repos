@@ -23,8 +23,7 @@ export default class Cards extends React.Component {
             code: data.html_url,
             updated: data.updated_at,
             api: data.url,
-            id: data.id,
-            img: `https://raw.githubusercontent.com/anjakhan/${data.name}/main/screenshot.png`
+            id: data.id
           }
           this.setState(state => {
             const list = [...state.repos, repo];
@@ -46,8 +45,8 @@ export default class Cards extends React.Component {
     return (
       <>
         { this.state.repos.map(repo => {
-          const { name, description, language, code, updated, api, img, id } = repo;
-          return <CardSetup src={img} title={name} text={description} updated={updated} key={id} language={language}/>
+          const { name, description, language, code, updated, api, id } = repo;
+          return <CardSetup title={name} text={description} updated={updated} key={id} language={language}/>
         })}
       </>
     );
