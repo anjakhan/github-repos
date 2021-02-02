@@ -15,22 +15,21 @@ export default class Cards extends React.Component {
   getRepos() {
     axios.get('https://api.github.com/users/anjakhan/repos')
       .then((response) => {
-        response.data.forEach(data => {
+        for (let i=0; i<9; i++) {
+          const data = response.data[i]
           const repo = {
             name: data.name,
             description: data.description,
             language: data.language,
             code: data.html_url,
             updated: data.updated_at,
-            api: data.url,
             id: data.id
           }
           this.setState(state => {
             const list = [...state.repos, repo];
-
             return { repos: list }
           })
-        })
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -41,12 +40,11 @@ export default class Cards extends React.Component {
   }
 
   render() {
-    
     return (
       <>
-        { this.state.repos.map(repo => {
-          const { name, description, language, code, updated, api, id } = repo;
-          return <CardSetup title={name} text={description} updated={updated} key={id} language={language}/>
+        {this.state.repos.map(repo => {
+          const { name, description, language, code, updated, id } = repo;
+          return <CardSetup title={name} text={description} updated={updated} key={id} language={language} code={code} />
         })}
       </>
     );

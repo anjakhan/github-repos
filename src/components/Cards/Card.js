@@ -6,7 +6,9 @@ export default class CardSetup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: null
+      image: null,
+      diffMonths: null,
+      year: null
     }
   }
   getRepos() {
@@ -15,29 +17,39 @@ export default class CardSetup extends React.Component {
         this.setState({ image: `https://raw.githubusercontent.com/anjakhan/${this.props.title}/main/screenshot.png` })
       })
       .catch((error) => {
-        this.setState({ image: 'https://cdn.pixabay.com/photo/2018/08/08/21/48/interface-3593269_960_720.png' })
+        this.setState({ image: 'https://cdn.pixabay.com/photo/2015/09/07/08/22/under-928246_960_720.jpg' })
         console.log('no image found');
       })
   }
   componentDidMount() {
     this.getRepos();
+    const today = new Date();
+    const date = new Date(this.props.updated);
+    const year = new Date().getFullYear() === date.getFullYear();
+    let diff = (today.getTime() - date.getTime()) / 1000;
+    diff = diff / (60 * 60 * 24 * 10 * 3);
+    this.setState({ year: year, diffMonths: Math.abs(Math.round(diff))});
   }
 
   render() {
-    const { title, text, updated, language } = this.props;
+    const { title, text, language, code } = this.props;
     return (
         <Card>
           <Card.Img variant="top" src={this.state.image} />
           <Card.Body>
-            <Card.Title>{title}</Card.Title>
+            <Card.Title><a href={code} rel="noreferrer" target="_blank" style={{textDecoration:"none", color:"inherit", cursor:"pointer"}}>{title}</a></Card.Title>
             <Card.Text>
                 {text}{' '}<br /><br />
                 { language ? <span><b>language:</b>{' '}{language}</span> : false }
             </Card.Text>
           </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Last updated {updated}</small>
-          </Card.Footer>
+          { 
+            this.state.diffMonths < 1 && this.state.year ?
+            <Card.Footer>
+              <small className="text-muted">Recently updated</small>
+            </Card.Footer> 
+            : null
+          }
         </Card>
     );
   }
