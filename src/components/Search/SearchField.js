@@ -16,7 +16,7 @@ export default class SearchField extends React.Component {
                 .then((response) => {
                     const value = e.target.value.trim();
                     const repos = response.data.map(repo => {
-                        if (repo.name.toLowerCase().includes(value)) {
+                        if (repo.name.toLowerCase().includes(value.toLowerCase())) {
                             return repo.name
                         } else {
                             return null

@@ -9,13 +9,15 @@ export default class Cards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      n: 0,
       repos: []
     }
   }
   getRepos() {
     axios.get('https://api.github.com/users/anjakhan/repos')
       .then((response) => {
-        for (let i=0; i<9; i++) {
+        const n = response.data.length;
+        for (let i=0; i<n; i++) {
           const data = response.data[i]
           const repo = {
             name: data.name,
@@ -27,7 +29,7 @@ export default class Cards extends React.Component {
           }
           this.setState(state => {
             const list = [...state.repos, repo];
-            return { repos: list }
+            return { n:n, repos: list }
           })
         }
       })
@@ -40,9 +42,13 @@ export default class Cards extends React.Component {
   }
 
   render() {
+    let n = this.state.n;
+    this.props.allRepos ? n=this.state.n : n=9;
     return (
       <>
-        {this.state.repos.map(repo => {
+        {this.state.repos
+          .filter((item, idx) => idx<n)
+          .map(repo => {
           const { name, description, language, code, updated, id } = repo;
           return <CardSetup title={name} text={description} updated={updated} key={id} language={language} code={code} />
         })}
