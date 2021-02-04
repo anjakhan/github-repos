@@ -15,10 +15,10 @@ export default class Cards extends React.Component {
   }
   getRepos() {
     axios.get('https://api.github.com/users/anjakhan/repos')
-      .then((response) => {
+      .then((response) => {        
         const n = response.data.length;
-        for (let i=0; i<n; i++) {
-          const data = response.data[i]
+        for (let i=0; i<n; i++) {          
+          const data = response.data[i];
           const repo = {
             name: data.name,
             description: data.description,

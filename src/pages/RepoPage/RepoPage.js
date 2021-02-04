@@ -12,7 +12,8 @@ export default class RepoPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      all: false
+      all: false,
+      screenshot: null
     }
     this.getAllRepos = this.getAllRepos.bind(this);
   }

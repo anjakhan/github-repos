@@ -17,8 +17,8 @@ export default class CardSetup extends React.Component {
         this.setState({ image: `https://raw.githubusercontent.com/anjakhan/${this.props.title}/main/screenshot.png` })
       })
       .catch((error) => {
-        this.setState({ image: 'https://cdn.pixabay.com/photo/2015/09/07/08/22/under-928246_960_720.jpg' })
-        console.log('no image found');
+        this.setState({ image: null })
+        console.log('no image found', error);
       })
   }
   componentDidMount() {
@@ -35,7 +35,7 @@ export default class CardSetup extends React.Component {
     const { title, text, language, code } = this.props;
     return (
         <Card>
-          <Card.Img variant="top" src={this.state.image} />
+          { this.state.image ? <Card.Img variant="top" src={this.state.image} /> : false }
           <Card.Body>
             <Card.Title><a href={code} rel="noreferrer" target="_blank" style={{textDecoration:"none", color:"inherit", cursor:"pointer"}}>{title}</a></Card.Title>
             <Card.Text>
