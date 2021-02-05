@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Jumbotron from "../../components/Jumbotron/Jumbotron";
 import SearchField from "../../components/Search/SearchField";
 import Cards from "../../components/Cards/Cards";
+import Footer from "../../components/Footer/Footer";
 
 export default class RepoPage extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export default class RepoPage extends React.Component {
   }
   render() {
     return (
+      <>
       <Container style={{position: "relative"}}>
         <Jumbotron />
         <SearchField />
@@ -33,6 +35,8 @@ export default class RepoPage extends React.Component {
           {this.state.all ? "View less" : "View all repositories"}
         </Button>
       </Container>
+      <Footer />
+      </>
     );
   }
 }
